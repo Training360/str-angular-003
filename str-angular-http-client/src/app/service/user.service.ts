@@ -14,7 +14,27 @@ export class UserService {
     private http: HttpClient,
   ) { }
 
+  /**
+   * Get all users from the server.
+   */
   getAll(): Observable<User[]> {
     return this.http.get<User[]>(this.apiUrl);
   }
+
+  get(user: User): Observable<User> {
+    return this.http.get<User>(`${this.apiUrl}/${user.id}`);
+  }
+
+  create(user: User): Observable<User> {
+    return this.http.post<User>(this.apiUrl, user);
+  }
+
+  update(user: User): Observable<User> {
+    return this.http.patch<User>(`${this.apiUrl}/${user.id}`, user);
+  }
+
+  remove(user: User): Observable<User> {
+    return this.http.delete<User>(`${this.apiUrl}/${user.id}`);
+  }
+
 }

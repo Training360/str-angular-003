@@ -1,3 +1,32 @@
-<pre>
-  {{ userList$ | async | json }}
-</pre>
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th *ngFor="let col of cols">{{ col.text }}</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of userList$ | async">
+            <td *ngFor="let col of cols">
+              <input *ngIf="col.editable" [(ngModel)]="user[col.key]" type="text" class="form-control">
+              <span *ngIf="!col.editable">{{ user[col.key] }}</span>
+            </td>
+            <td>
+              <div class="btn-group">
+                <button (click)="onUpdate(user)" class="btn btn-info">
+                  <i class="fa fa-refresh"></i>
+                </button>
+                <button (click)="onDelete(user)" class="btn btn-danger">
+                  <i class="fa fa-trash"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
