@@ -1,5 +1,17 @@
 <div class="container">
   <div class="row">
+    <div class="col-3 offset-5 mt-3 mb-3">
+      <select [(ngModel)]="filterKey" class="form-control">
+        <option *ngFor="let key of filterKeys" [value]="key">
+          {{ key }}
+        </option>
+      </select>
+    </div>
+    <div class="col-4 mt-3 mb-3">
+      <input [(ngModel)]="phrase" type="text" class="form-control">
+    </div>
+  </div>
+  <div class="row">
     <div class="col-12">
       <table class="table table-striped">
         <thead>
@@ -9,7 +21,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let user of userList$ | async">
+          <tr *ngFor="let user of userList$ | async | filter:filterKey:phrase | slice:0:10">
             <td *ngFor="let col of cols">
               <input *ngIf="col.editable" [(ngModel)]="user[col.key]" type="text" class="form-control">
               <span *ngIf="!col.editable">{{ user[col.key] }}</span>

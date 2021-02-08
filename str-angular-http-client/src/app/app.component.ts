@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { unzipSync } from 'zlib';
 import { User } from './model/user';
 import { ConfigService } from './service/config.service';
 import { ITableCol } from './service/config.service';
@@ -12,8 +14,14 @@ import { UserService } from './service/user.service';
 })
 export class AppComponent {
   title = 'str-angular-http-client';
+  phrase: string = '';
+  filterKey: string = 'first_name';
+  filterKeys: string[] = Object.keys(new User());
 
-  userList$: Observable<User[]> = this.userService.getAll();
+  userList$: Observable<User[]> = this.userService.getAll().pipe(
+    map( users => users.filter( user => user.catID === 1 ) )
+  );
+  // userList: User[] = this.userService.list;
   cols: ITableCol[] = this.config.tableCols;
 
   constructor(

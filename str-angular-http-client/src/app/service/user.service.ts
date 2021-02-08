@@ -8,6 +8,40 @@ import { User } from '../model/user';
 })
 export class UserService {
 
+  list: User[] = [
+    {
+      id: 1,
+      catID: 1,
+      first_name: 'József',
+      last_name: 'Cserkó',
+      email: 'j.cserko@cserko.hu',
+      gender: 'male',
+      ip_address: '128.25.145.22',
+      featured: true,
+    },
+    {
+      id: 2,
+      catID: 2,
+      first_name: 'Lídia',
+      last_name: 'Cserkó',
+      email: 'j.cserko@cserko.hu',
+      gender: 'male',
+      ip_address: '128.25.145.22',
+      featured: false,
+    },
+    {
+      id: 3,
+      catID: 2,
+      first_name: 'Krisztián',
+      last_name: 'Cserkó',
+      email: 'j.cserko@cserko.hu',
+      gender: 'male',
+      ip_address: '128.25.145.22',
+      featured: true,
+    },
+  ];
+
+
   apiUrl: string = 'http://localhost:3000/users';
 
   constructor(
