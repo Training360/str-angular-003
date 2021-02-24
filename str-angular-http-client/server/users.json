@@ -921,16 +921,6 @@
       "featured": true
     },
     {
-      "id": 94,
-      "catID": 1,
-      "first_name": "Emilee",
-      "last_name": "Pengilly",
-      "email": "epengilly2l@dedecms.com",
-      "gender": "Polygender",
-      "ip_address": "135.224.172.35",
-      "featured": true
-    },
-    {
       "id": 95,
       "catID": 1,
       "first_name": "Merridie",
@@ -958,36 +948,6 @@
       "email": "bstallon2o@kickstarter.com",
       "gender": "Female",
       "ip_address": "169.82.140.26",
-      "featured": true
-    },
-    {
-      "id": 98,
-      "catID": 1,
-      "first_name": "Alice",
-      "last_name": "Perell",
-      "email": "aperell2p@aboutads.info",
-      "gender": "Female",
-      "ip_address": "198.174.121.97",
-      "featured": true
-    },
-    {
-      "id": 99,
-      "catID": 1,
-      "first_name": "Tierney",
-      "last_name": "Wicks",
-      "email": "twicks2q@blinklist.com",
-      "gender": "Genderqueer",
-      "ip_address": "142.125.67.97",
-      "featured": true
-    },
-    {
-      "id": 100,
-      "catID": 1,
-      "first_name": "Jessalyn",
-      "last_name": "Fawltey",
-      "email": "jfawltey2r@comcast.net",
-      "gender": "Agender",
-      "ip_address": "24.98.137.178",
       "featured": true
     },
     {

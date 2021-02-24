@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { User } from './model/user';
@@ -15,20 +15,22 @@ interface IPageBtn {
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'str-angular-http-client';
   phrase: string = '';
   filterKey: string = 'first_name';
   filterKeys: string[] = Object.keys(new User());
 
   // Paginator.
-  productsNum: number = 0;
+  productsProperties: {count: number} = {
+    count: 0,
+  };
   pageSize: number = 10;
   pageStart: number = 1;
   currentPage: number = 1;
   get paginator(): IPageBtn[] {
-    const pages = [];
-    for (let i = 0; i < this.productsNum / this.pageSize && pages.length < 10; i++) {
+    const pages: IPageBtn[] = [];
+    for (let i = 0; i < this.productsProperties.count / this.pageSize && pages.length < 10; i++) {
       const page = this.pageStart + i;
       pages.push({page});
     }
@@ -42,9 +44,9 @@ export class AppComponent {
     return this.pageSliceStart + this.pageSize;
   }
 
-  userList$: Observable<User[]> = this.userService.getAll().pipe(
+  userList$: Observable<User[]> = this.userService.list$.pipe(
     map( (users: User[]) => users.filter( user => user.catID === 1 ) ),
-    tap( users => this.productsNum = users.length )
+    tap( users => this.productsProperties.count = users.length )
   );
   // userList: User[] = this.userService.list;
   cols: ITableCol[] = this.config.tableCols;
@@ -54,22 +56,27 @@ export class AppComponent {
     private config: ConfigService,
   ) {}
 
+  ngOnInit(): void {
+    this.userService.getAll();
+  }
+
   onUpdate(user: User): void {
-    this.userService.update(user).subscribe(
-      updatedUser => console.log(updatedUser)
-    );
+    this.userService.update(user);
   }
 
   onDelete(user: User): void {
-    this.userService.remove(user).subscribe(
-      () => console.log('deleted')
-    );
+    this.userService.remove(user);
   }
 
   onPaginate(ev: Event, btn: IPageBtn): void {
     ev.preventDefault();
     this.currentPage = btn.page;
     this.pageStart = (btn.page - 5) < 1 ? 1 : (btn.page - 5);
-    console.log(btn);
+  }
+
+  onStepPage(ev: Event, step: number): void {
+    ev.preventDefault();
+    this.currentPage += step;
+    this.pageStart = (this.currentPage - 5) < 1 ? 1 : (this.currentPage - 5);
   }
 }

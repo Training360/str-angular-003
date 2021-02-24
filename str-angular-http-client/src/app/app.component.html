@@ -1,5 +1,10 @@
 <div class="container">
   <div class="row">
+    <div class="col-12">
+      <h2>{{ (userList$ | async)?.length }} Users</h2>
+    </div>
+  </div>
+  <div class="row">
     <div class="col-3 offset-5 mt-3 mb-3">
       <select [(ngModel)]="filterKey" class="form-control">
         <option *ngFor="let key of filterKeys" [value]="key">
@@ -15,14 +20,18 @@
     <div class="col-12">
       <nav class="d-flex justify-content-end">
         <ul class="pagination">
-          <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+          <li [class.disabled]="currentPage === 1" class="page-item">
+            <a (click)="onStepPage($event, -1)" class="page-link" href="#">Previous</a>
+          </li>
           <li *ngFor="let btn of paginator" class="page-item"
             [class.active]="btn.page === currentPage">
             <a (click)="onPaginate($event, btn)" class="page-link" href="#">
               {{ btn.page }}
             </a>
           </li>
-          <li class="page-item"><a class="page-link" href="#">Next</a></li>
+          <li class="page-item">
+            <a (click)="onStepPage($event, 1)" class="page-link" href="#">Next</a>
+          </li>
         </ul>
       </nav>
     </div>
@@ -37,7 +46,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let user of userList$ | async | filter:filterKey:phrase | slice:pageSliceStart:pageSliceEnd">
+          <tr *ngFor="let user of userList$ | async | filter:filterKey:phrase:productsProperties | slice:pageSliceStart:pageSliceEnd">
             <td *ngFor="let col of cols">
               <input *ngIf="col.editable" [(ngModel)]="user[col.key]" type="text" class="form-control">
               <span *ngIf="!col.editable">{{ user[col.key] }}</span>
@@ -55,6 +64,27 @@
           </tr>
         </tbody>
       </table>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <nav class="d-flex justify-content-end">
+        <ul class="pagination">
+          <li [class.disabled]="currentPage === 1" class="page-item">
+            <a (click)="onStepPage($event, -1)" class="page-link" href="#">Previous</a>
+          </li>
+          <li *ngFor="let btn of paginator" class="page-item"
+            [class.active]="btn.page === currentPage">
+            <a (click)="onPaginate($event, btn)" class="page-link" href="#">
+              {{ btn.page }}
+            </a>
+          </li>
+          <li class="page-item">
+            <a (click)="onStepPage($event, 1)" class="page-link" href="#">Next</a>
+          </li>
+        </ul>
+      </nav>
     </div>
   </div>
 </div>
